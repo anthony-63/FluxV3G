@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"strings"
 
+	"flux/game/loaders"
 	"flux/game/util"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -15,6 +16,8 @@ type StartupScene struct {
 }
 
 func CreateStartupScene() *StartupScene {
+	go loaders.LoadMaps()
+
 	return &StartupScene{
 		loadingText: "Loading Flux",
 	}

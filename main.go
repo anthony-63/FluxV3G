@@ -1,10 +1,9 @@
 package main
 
 import (
+	"flux/game/window"
 	"io"
 	"os"
-
-	"flux/game"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -35,7 +34,7 @@ func main() {
 
 	log.Info().Msg("Running window")
 
-	game.Game = game.CreateWindow()
-	game.Game.RunWindow()
-	game.Game.WindowCleanup()
+	window.GameWindow = window.CreateWindow()
+	window.GameWindow.RunWindow()
+	window.GameWindow.WindowCleanup()
 }

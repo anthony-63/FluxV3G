@@ -1,4 +1,4 @@
-package game
+package window
 
 import (
 	"flux/game/scenes"
@@ -8,6 +8,8 @@ import (
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
+
+var GameWindow FluxWindow
 
 const WIDTH = 1280
 const HEIGHT = 720
