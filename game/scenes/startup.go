@@ -17,6 +17,7 @@ type StartupScene struct {
 	progress        ui.ProgressBar
 	loading_label   ui.Label
 	substatus_label ui.Label
+	flux_logo       ui.TextureRect
 }
 
 func CreateStartupScene() *StartupScene {
@@ -55,7 +56,16 @@ func CreateStartupScene() *StartupScene {
 			Font:      util.MainFont,
 			Centered:  true,
 		},
+		flux_logo: ui.TextureRect{
+			X:        float32(rl.GetScreenWidth()) / 2,
+			Y:        float32(rl.GetScreenHeight())/2 - 100,
+			Width:    150,
+			Height:   150,
+			Centered: true,
+		},
 	}
+
+	scene.flux_logo.SetImageFromFile("data/.game/images/flux.png")
 
 	go scene.updateProgress(progress_chan)
 
@@ -93,4 +103,5 @@ func (scene StartupScene) Draw() {
 	scene.progress.Draw()
 	scene.loading_label.Draw()
 	scene.substatus_label.Draw()
+	scene.flux_logo.Draw()
 }
