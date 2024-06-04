@@ -1,4 +1,4 @@
-package ui
+package nodes
 
 import (
 	"errors"
@@ -27,6 +27,9 @@ func (rect *TextureRect) SetImageFromFile(path string) {
 	img := rl.LoadImage(path)
 	rl.ImageResize(img, int32(rect.Width), int32(rect.Height))
 	rect.Texture = rl.LoadTextureFromImage(img)
+
+	rl.UnloadImage(img)
+
 	rect.loaded = true
 }
 

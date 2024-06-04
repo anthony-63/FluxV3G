@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"flux/game/loaders"
-	"flux/game/ui"
+	"flux/game/nodes"
 	"flux/game/util"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -14,10 +14,12 @@ import (
 type StartupScene struct {
 	dot_timer float64
 
-	progress        ui.ProgressBar
-	loading_label   ui.Label
-	substatus_label ui.Label
-	flux_logo       ui.TextureRect
+	progress        nodes.ProgressBar
+	loading_label   nodes.Label
+	substatus_label nodes.Label
+	flux_logo       nodes.TextureRect
+
+	finished bool
 }
 
 func CreateStartupScene() *StartupScene {
@@ -26,7 +28,7 @@ func CreateStartupScene() *StartupScene {
 	go loaders.LoadMaps(progress_chan)
 
 	scene := StartupScene{
-		progress: ui.ProgressBar{
+		progress: nodes.ProgressBar{
 			X: float32(rl.GetScreenWidth()) / 2,
 			Y: float32(rl.GetScreenHeight())/2 + 45,
 
@@ -38,7 +40,7 @@ func CreateStartupScene() *StartupScene {
 
 			Centered: true,
 		},
-		loading_label: ui.Label{
+		loading_label: nodes.Label{
 			Text:      "Loading Flux",
 			X:         float32(rl.GetScreenWidth()) / 2,
 			Y:         float32(rl.GetScreenHeight()) / 2,
@@ -47,7 +49,7 @@ func CreateStartupScene() *StartupScene {
 			Font:      util.MainFont,
 			Centered:  true,
 		},
-		substatus_label: ui.Label{
+		substatus_label: nodes.Label{
 			Text:      "...",
 			X:         float32(rl.GetScreenWidth()) / 2,
 			Y:         float32(rl.GetScreenHeight())/2 + 20,
@@ -56,13 +58,15 @@ func CreateStartupScene() *StartupScene {
 			Font:      util.MainFont,
 			Centered:  true,
 		},
-		flux_logo: ui.TextureRect{
+		flux_logo: nodes.TextureRect{
 			X:        float32(rl.GetScreenWidth()) / 2,
 			Y:        float32(rl.GetScreenHeight())/2 - 100,
 			Width:    150,
 			Height:   150,
 			Centered: true,
 		},
+
+		finished: false,
 	}
 
 	scene.flux_logo.SetImageFromFile("data/.game/images/flux.png")
@@ -81,6 +85,8 @@ func (scene *StartupScene) updateProgress(c chan util.ProgressStruct) {
 
 		progress = <-c
 	}
+
+	scene.finished = true
 }
 
 func (scene *StartupScene) Update(dt float64) {
@@ -93,6 +99,10 @@ func (scene *StartupScene) Update(dt float64) {
 		}
 
 		scene.dot_timer = 0
+	}
+
+	if scene.finished {
+		SceneList = []IScene{CreateGameScene()}
 	}
 }
 
