@@ -7,12 +7,16 @@ import (
 )
 
 type GameScene struct {
+	scene_type int
+
 	camera nodes.Camera
 	grid   nodes.Sprite3D
 }
 
 func CreateGameScene() *GameScene {
 	game := GameScene{
+		scene_type: SCENE_TYPE_GAME,
+
 		camera: nodes.NewCamera(rl.Vector3{
 			X: 0,
 			Y: 0,

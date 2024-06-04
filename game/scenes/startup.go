@@ -1,7 +1,6 @@
 package scenes
 
 import (
-	"strconv"
 	"strings"
 
 	"flux/game/loaders"
@@ -12,6 +11,8 @@ import (
 )
 
 type StartupScene struct {
+	scene_type int
+
 	dot_timer float64
 
 	progress        nodes.ProgressBar
@@ -28,6 +29,8 @@ func CreateStartupScene() *StartupScene {
 	go loaders.LoadMaps(progress_chan)
 
 	scene := StartupScene{
+		scene_type: SCENE_TYPE_STARTUP,
+
 		progress: nodes.ProgressBar{
 			X: float32(rl.GetScreenWidth()) / 2,
 			Y: float32(rl.GetScreenHeight())/2 + 45,
@@ -102,13 +105,12 @@ func (scene *StartupScene) Update(dt float64) {
 	}
 
 	if scene.finished {
-		SceneList = []IScene{CreateGameScene()}
+		SceneList = []IScene{CreateGameScene(), CreateDebugScene()}
 	}
 }
 
 func (scene StartupScene) Draw() {
 	rl.ClearBackground(rl.NewColor(0x10, 0x10, 0x10, 0xff))
-	rl.DrawText(strconv.Itoa(int(rl.GetFPS())), 0, 0, 16, rl.Yellow)
 
 	scene.progress.Draw()
 	scene.loading_label.Draw()

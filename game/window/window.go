@@ -31,7 +31,7 @@ func CreateWindow() FluxWindow {
 	log.Info().Msg("Done loading fonts")
 
 	scenes.SceneList = []scenes.IScene{
-		scenes.CreateStartupScene(),
+		scenes.CreateStartupScene(), scenes.CreateDebugScene(),
 	}
 
 	return FluxWindow{}
