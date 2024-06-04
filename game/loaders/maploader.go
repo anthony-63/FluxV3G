@@ -24,6 +24,9 @@ func LoadMaps(progress_chan chan util.ProgressStruct) {
 		if errors.Is(err, os.ErrNotExist) {
 			log.Log().Msg("Creating map directory.")
 			os.Mkdir(MAP_DIR, os.ModeDir)
+			progress_chan <- util.ProgressStruct{
+				Done: true,
+			}
 			return
 		} else {
 			log.Error().Msg("Failed to open map folder")
