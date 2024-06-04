@@ -3,6 +3,7 @@ package loaders
 import (
 	"errors"
 	"flux/content"
+	"flux/game/util"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -16,7 +17,7 @@ const MAP_DIR = "data/maps"
 
 var LoadedMaps []content.BeatmapSet
 
-func LoadMaps() {
+func LoadMaps(progress_chan chan util.ProgressStruct) {
 	map_files, err := ioutil.ReadDir(MAP_DIR)
 
 	if err != nil {
@@ -33,7 +34,14 @@ func LoadMaps() {
 	log.Debug().Msg("Started map loading...")
 
 	timestamp := time.Now().UnixMilli()
-	for _, file := range map_files {
+	for i, file := range map_files {
+		progress_chan <- util.ProgressStruct{
+			At:    i,
+			Total: len(map_files),
+			Text:  file.Name(),
+			Done:  false,
+		}
+
 		if file.IsDir() {
 			if loaded, err := content.GetBeatmapSetFromFolder(filepath.Join(MAP_DIR, file.Name())); err == nil {
 				LoadedMaps = append(LoadedMaps, *loaded)
@@ -41,6 +49,10 @@ func LoadMaps() {
 				log.Error().Msg("Failed to load map\n" + err.Error())
 			}
 		}
+	}
+
+	progress_chan <- util.ProgressStruct{
+		Done: true,
 	}
 
 	log.Debug().Msg("Loaded " + strconv.Itoa(len(map_files)) + " maps in " + strconv.Itoa(int(time.Now().UnixMilli()-timestamp)) + "ms")

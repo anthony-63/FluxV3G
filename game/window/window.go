@@ -27,7 +27,8 @@ func CreateWindow() FluxWindow {
 
 	log.Info().Msg("Loading fonts...")
 
-	util.MainFont = rl.LoadFontEx("data/fonts/noto_sans.ttf", 128, nil)
+	util.MainFont = rl.LoadFontEx("data/fonts/noto_sans.ttf", 32, nil)
+	rl.GenTextureMipmaps(&util.MainFont.Texture)
 
 	log.Info().Msg("Done loading fonts")
 
