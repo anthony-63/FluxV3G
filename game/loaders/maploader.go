@@ -3,10 +3,10 @@ package loaders
 import (
 	"errors"
 	"flux/content"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	"github.com/rs/zerolog/log"
@@ -30,7 +30,8 @@ func LoadMaps() {
 		}
 	}
 
-	fmt.Println("Started map loading...")
+	log.Debug().Msg("Started map loading...")
+
 	timestamp := time.Now().UnixMilli()
 	for _, file := range map_files {
 		if file.IsDir() {
@@ -40,8 +41,7 @@ func LoadMaps() {
 				log.Error().Msg("Failed to load map\n" + err.Error())
 			}
 		}
-
 	}
 
-	fmt.Print("Loaded ", len(map_files), " maps in ", time.Now().UnixMilli()-timestamp, "ms\n")
+	log.Debug().Msg("Loaded " + strconv.Itoa(len(map_files)) + " maps in " + strconv.Itoa(int(time.Now().UnixMilli()-timestamp)) + "ms")
 }

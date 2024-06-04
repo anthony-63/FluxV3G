@@ -3,7 +3,6 @@ package content
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 
 	"github.com/buger/jsonparser"
@@ -33,7 +32,7 @@ func GetBeatmapFromFile(path string) (*Beatmap, error) {
 		return nil, fmt.Errorf("%s: difficulty doesnt exist", path)
 	}
 
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("%s: failed to read map", path)
 	}
