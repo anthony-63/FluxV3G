@@ -11,22 +11,22 @@ import (
 )
 
 type BeatmapSet struct {
-	broken  bool
-	version uint8
+	Broken  bool
+	Version uint8
 
-	hash string
-	path string
+	Hash string
+	Path string
 
-	artist  string
-	title   string
-	mappers []string
+	Artist  string
+	Title   string
+	Mappers []string
 
-	music_path string
+	MusicPath string
 
-	has_cover bool
-	cover     []uint8
+	HasCover bool
+	Cover    []uint8
 
-	difficulties []Beatmap
+	Difficulties []Beatmap
 }
 
 func GetBeatmapSetFromFolder(path string) (*BeatmapSet, error) {
@@ -44,21 +44,21 @@ func GetBeatmapSetFromFolder(path string) (*BeatmapSet, error) {
 	if version, err := jsonparser.GetInt(data, "_version"); err != nil {
 		return nil, fmt.Errorf("%s: failed to get version", path)
 	} else {
-		set.version = uint8(version)
+		set.Version = uint8(version)
 	}
 
-	if set.title, err = jsonparser.GetString(data, "_title"); err != nil {
+	if set.Title, err = jsonparser.GetString(data, "_title"); err != nil {
 		return nil, fmt.Errorf("%s: failed to get title", path)
 	}
 
-	if set.artist, err = jsonparser.GetString(data, "_artist"); err != nil {
-		set.artist = ""
+	if set.Artist, err = jsonparser.GetString(data, "_artist"); err != nil {
+		set.Artist = ""
 	}
 
 	_, err = jsonparser.ArrayEach(data, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
 		mp, _ := GetBeatmapFromFile(filepath.Join(path, string(value)))
 		if mp != nil {
-			set.difficulties = append(set.difficulties, *mp)
+			set.Difficulties = append(set.Difficulties, *mp)
 		}
 	}, "_difficulties")
 

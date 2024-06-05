@@ -21,7 +21,7 @@ func CreateWindow() FluxWindow {
 	rl.SetConfigFlags(rl.FlagMsaa4xHint)
 	rl.InitWindow(WIDTH, HEIGHT, TITLE)
 
-	rl.ToggleBorderlessWindowed()
+	// rl.ToggleBorderlessWindowed()
 
 	log.Info().Msg("Loading fonts...")
 

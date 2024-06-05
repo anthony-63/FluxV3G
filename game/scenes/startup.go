@@ -105,6 +105,9 @@ func (scene *StartupScene) Update(dt float64) {
 	}
 
 	if scene.finished {
+		util.SelectedMapSet = loaders.LoadedMaps[0]
+		util.SelectedMap = util.SelectedMapSet.Difficulties[0]
+
 		SceneList = []IScene{CreateGameScene(), CreateDebugScene()}
 	}
 }
@@ -116,4 +119,8 @@ func (scene StartupScene) Draw() {
 	scene.loading_label.Draw()
 	scene.substatus_label.Draw()
 	scene.flux_logo.Draw()
+}
+
+func (scene StartupScene) GetType() int {
+	return scene.scene_type
 }
