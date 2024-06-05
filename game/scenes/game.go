@@ -25,7 +25,7 @@ func CreateGameScene() *GameScene {
 		camera: nodes.NewCamera(rl.Vector3{
 			X: 0,
 			Y: 0,
-			Z: 1.35,
+			Z: 7.5 * util.VFCONV32,
 		}),
 		grid: nodes.Sprite3D{
 			Position: rl.Vector3Zero(),

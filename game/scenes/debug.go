@@ -12,6 +12,8 @@ type DebugScene struct {
 
 	fps_timer float64
 	fps_count int32
+
+	game *GameScene
 }
 
 func CreateDebugScene() *DebugScene {
@@ -38,7 +40,9 @@ func (debug *DebugScene) Draw() {
 	for _, scene := range SceneList {
 		if scene.GetType() == SCENE_TYPE_GAME {
 			game := scene.(*GameScene)
-			util.DrawTextMFont(fmt.Sprintf("T: %.02f", game.sync_manger.RealTime), 8, 32*1, 32, rl.Green)
+			_ = game
+			util.DrawTextMFont(fmt.Sprint("Current: ", util.SelectedMapSet.Title, "[", util.SelectedMap.Name, "]"), 8, 26*1, 26, rl.Green)
+			util.DrawTextMFont(fmt.Sprintf("T: %.02f", game.sync_manger.RealTime), 8, 26*2, 26, rl.Green)
 		}
 	}
 }
