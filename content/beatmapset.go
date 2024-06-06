@@ -36,6 +36,8 @@ func GetBeatmapSetFromFolder(path string) (*BeatmapSet, error) {
 		return nil, fmt.Errorf("%s: meta.json doesnt exist in directory", path)
 	}
 
+	set.Path = path
+
 	data, err := ioutil.ReadFile(path + "/meta.json")
 	if err != nil {
 		return nil, fmt.Errorf("%s: failed to read meta.json", path)
@@ -53,6 +55,10 @@ func GetBeatmapSetFromFolder(path string) (*BeatmapSet, error) {
 
 	if set.Artist, err = jsonparser.GetString(data, "_artist"); err != nil {
 		set.Artist = ""
+	}
+
+	if set.MusicPath, err = jsonparser.GetString(data, "_music"); err != nil {
+		return nil, fmt.Errorf("%s: failed to get music path", path)
 	}
 
 	_, err = jsonparser.ArrayEach(data, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {

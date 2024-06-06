@@ -114,6 +114,8 @@ func (manager *NoteManager) updateNotes() {
 		if !note.Hit && !note.InHitWindow(sync.RealTime, sync.Speed) {
 			did_hitreg = true
 			note.Hit = true
+
+			// miss stuff
 		}
 
 		if did_hitreg {

@@ -3,6 +3,8 @@ package managers
 import (
 	"flux/game/util"
 	"time"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 type SyncManager struct {
@@ -12,6 +14,8 @@ type SyncManager struct {
 	lastTime float64
 	RealTime float64
 	EndTime  float64
+
+	AudioStream rl.Music
 }
 
 func CreateSyncManager() *SyncManager {
@@ -29,10 +33,16 @@ func (manager *SyncManager) Update(dt float64) {
 		return
 	}
 
+	rl.UpdateMusicStream(manager.AudioStream)
+
 	now := float64(time.Now().UnixMicro())
 	time := manager.Speed * (now - manager.lastTime) * 0.000001
 	manager.lastTime = now
 	manager.RealTime += time
+}
+
+func (manager *SyncManager) SetStream(music rl.Music) {
+	manager.AudioStream = music
 }
 
 func (manager *SyncManager) Start(from float64) {

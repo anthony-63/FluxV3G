@@ -35,7 +35,7 @@ func (debug *DebugScene) Update(dt float64) {
 }
 
 func (debug *DebugScene) Draw() {
-	util.DrawTextMFont(fmt.Sprint(debug.fps_count), 0, 0, 32, rl.Yellow)
+	// rl.DrawFPS(0, 0)
 
 	if debug.game == nil {
 		for _, scene := range SceneList {

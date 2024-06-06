@@ -38,6 +38,10 @@ func CreateWindow() FluxWindow {
 		}
 	}
 
+	log.Info().Msg("Setting up audio...")
+	rl.InitAudioDevice()
+	log.Info().Msg("Done setting up audio")
+
 	log.Info().Msg("Loading fonts...")
 
 	util.MainFont = rl.LoadFontEx("data/.game/fonts/noto_sans.ttf", 32, nil)
