@@ -5,6 +5,7 @@ import (
 	"os"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
+	"github.com/rs/zerolog/log"
 )
 
 type TextureRect struct {
@@ -22,6 +23,8 @@ type TextureRect struct {
 func (rect *TextureRect) SetImageFromFile(path string) {
 	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
 		rect.loaded = false
+		log.Error().Str("path", path).Msg("Failed to find texture.")
+		os.Exit(1)
 	}
 
 	img := rl.LoadImage(path)

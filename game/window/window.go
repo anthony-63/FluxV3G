@@ -1,8 +1,10 @@
 package window
 
 import (
+	"errors"
 	"flux/game/scenes"
 	"flux/game/util"
+	"os"
 
 	"github.com/rs/zerolog/log"
 
@@ -14,6 +16,7 @@ var GameWindow FluxWindow
 const WIDTH = 1280
 const HEIGHT = 720
 const TITLE = "FluxV3-OPT"
+const ICON_PATH = "data/.game/images/flux.png"
 
 type FluxWindow struct{}
 
@@ -22,6 +25,17 @@ func CreateWindow() FluxWindow {
 	rl.InitWindow(WIDTH, HEIGHT, TITLE)
 
 	// rl.ToggleBorderlessWindowed()
+
+	log.Info().Msg("Loading window icon...")
+	if _, err := os.Stat(ICON_PATH); errors.Is(err, os.ErrNotExist) {
+	} else {
+		if err == nil {
+			img := rl.LoadImage(ICON_PATH)
+			rl.SetWindowIcon(*img)
+			log.Info().Msg("Unloading icon res")
+			rl.UnloadImage(img)
+		}
+	}
 
 	log.Info().Msg("Loading fonts...")
 

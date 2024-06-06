@@ -19,6 +19,7 @@ type DebugScene struct {
 func CreateDebugScene() *DebugScene {
 	debug := DebugScene{
 		scene_type: SCENE_TYPE_DEBUG,
+		game:       nil,
 	}
 
 	return &debug
@@ -34,17 +35,20 @@ func (debug *DebugScene) Update(dt float64) {
 }
 
 func (debug *DebugScene) Draw() {
-
 	util.DrawTextMFont(fmt.Sprint(debug.fps_count), 0, 0, 32, rl.Yellow)
 
-	for _, scene := range SceneList {
-		if scene.GetType() == SCENE_TYPE_GAME {
-			game := scene.(*GameScene)
-			_ = game
-			util.DrawTextMFont(fmt.Sprint("Current: ", util.SelectedMapSet.Title, "[", util.SelectedMap.Name, "]"), 8, 26*1, 26, rl.Green)
-			util.DrawTextMFont(fmt.Sprintf("T: %.02f", game.sync_manger.RealTime), 8, 26*2, 26, rl.Green)
+	if debug.game == nil {
+		for _, scene := range SceneList {
+			if scene.GetType() == SCENE_TYPE_GAME {
+				debug.game = scene.(*GameScene)
+			}
 		}
+		return
 	}
+
+	util.DrawTextMFont(fmt.Sprint("Current: ", util.SelectedMapSet.Title, "[", util.SelectedMap.Name, "]"), 8, 26*1, 26, rl.Green)
+	util.DrawTextMFont(fmt.Sprintf("Rendering: %d", debug.game.note_manager.NotesProcessing), 8, 26*2, 26, rl.Green)
+	util.DrawTextMFont(fmt.Sprintf("Time: %.02f", debug.game.sync_manger.RealTime), 8, 26*3, 26, rl.Green)
 }
 
 func (scene DebugScene) GetType() int {

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"sort"
 
 	"github.com/buger/jsonparser"
 )
@@ -54,6 +55,10 @@ func GetBeatmapFromFile(path string) (*Beatmap, error) {
 		ndata.T, _ = jsonparser.GetFloat(value, "_time")
 		mp.Notes = append(mp.Notes, ndata)
 	}, "_notes")
+
+	sort.Slice(mp.Notes[:], func(i, j int) bool {
+		return mp.Notes[i].T < mp.Notes[j].T
+	})
 
 	if err != nil {
 		return nil, fmt.Errorf("%s: failed to parse notes(or difficulty has none)", path)

@@ -27,9 +27,10 @@ func (sprite *Sprite3D) GenPlane(width float32, height float32, tex_path string)
 	log.Info().Msg("Loading texture...")
 	if _, err := os.Stat(tex_path); errors.Is(err, os.ErrNotExist) {
 		sprite.loaded = false
-		log.Warn().Str("path", tex_path).Msg("Failed to find grid texture.")
-		return
+		log.Error().Str("path", tex_path).Msg("Failed to find sprite texture.")
+		os.Exit(1)
 	}
+
 	img := rl.LoadImage(tex_path)
 	log.Info().Msg("Generating image...")
 

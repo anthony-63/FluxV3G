@@ -15,7 +15,8 @@ type GameScene struct {
 	camera nodes.Camera
 	grid   nodes.Sprite3D
 
-	sync_manger *managers.SyncManager
+	sync_manger  *managers.SyncManager
+	note_manager *managers.NoteManager
 }
 
 func CreateGameScene() *GameScene {
@@ -36,7 +37,8 @@ func CreateGameScene() *GameScene {
 			},
 			Size: rl.Vector2One(),
 		},
-		sync_manger: managers.CreateSyncManager(),
+		sync_manger:  managers.CreateSyncManager(),
+		note_manager: managers.CreateNoteManager(),
 	}
 
 	game.grid.GenPlane(1, 1, "data/.game/game/grid.png")
