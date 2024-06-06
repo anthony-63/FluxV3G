@@ -34,7 +34,7 @@ func LoadMaps(progress_chan chan util.ProgressStruct) {
 		}
 	}
 
-	log.Debug().Msg("Started map loading...")
+	log.Info().Msg("Started map loading...")
 
 	timestamp := time.Now().UnixMilli()
 	for i, file := range map_files {

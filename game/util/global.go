@@ -1,6 +1,8 @@
 package util
 
-import "flux/content"
+import (
+	"flux/content"
+)
 
 var SelectedMapSet content.BeatmapSet
 var SelectedMap content.Beatmap

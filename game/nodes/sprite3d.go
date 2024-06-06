@@ -38,18 +38,14 @@ func (sprite *Sprite3D) GenPlane(width float32, height float32, tex_path string)
 
 	log.Info().Msg("Setting texture...")
 	rl.SetMaterialTexture(sprite.model.Materials, rl.MapDiffuse, tex)
-
 	log.Info().Msg("Done")
-}
-
-func (sprite *Sprite3D) Update(dt float64) {
-
 }
 
 func (sprite *Sprite3D) Draw() {
 	rl.PushMatrix()
-	rl.Rotatef(90, 1, 0, 0)
-	// rl.DrawModelEx(sprite.model, sprite.Position, rl.Vector3Zero(), 0, rl.Vector3One(), rl.White)
+	rl.Rotatef(sprite.Rotation.X, 1, 0, 0)
+	rl.Rotatef(sprite.Rotation.Y, 0, 1, 0)
+	rl.Rotatef(sprite.Rotation.Z, 0, 0, 1)
 	rl.DrawModel(sprite.model, sprite.Position, 1, rl.White)
 	rl.PopMatrix()
 }

@@ -70,7 +70,7 @@ func (manager *NoteManager) updateRender() {
 	sync := manager.sync_manager
 
 	to_render := []nodes.Note{}
-	for i := manager.StartProcess; i <= len(manager.OrderedNotes); i++ {
+	for i := manager.StartProcess; i < len(manager.OrderedNotes); i++ {
 		note := manager.OrderedNotes[i]
 		if note.IsVisible(sync.RealTime, sync.Speed, manager.approach_time*sync.Speed, manager.pushback) {
 			to_render = append(to_render, note)
@@ -89,7 +89,7 @@ func (manager *NoteManager) updateNotes() {
 	sync := manager.sync_manager
 
 	to_process := []nodes.Note{}
-	for i := manager.StartProcess; i <= len(manager.OrderedNotes); i++ {
+	for i := manager.StartProcess; i < len(manager.OrderedNotes); i++ {
 		note := manager.OrderedNotes[i]
 
 		if note.CalculateTime(sync.RealTime, manager.approach_time*sync.Speed) <= 0 && !note.Hit {

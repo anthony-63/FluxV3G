@@ -13,7 +13,7 @@ type GameScene struct {
 	scene_type int
 
 	camera nodes.Camera
-	grid   nodes.Sprite3D
+	grid   *nodes.Sprite3D
 
 	sync_manger   *managers.SyncManager
 	note_renderer *managers.NoteRenderer
@@ -26,13 +26,13 @@ func CreateGameScene() *GameScene {
 
 		camera: nodes.NewCamera(rl.Vector3{
 			X: 0,
-			Y: 0.0,
+			Y: 0,
 			Z: 7.5 * util.VFCONV32,
 		}),
-		grid: nodes.Sprite3D{
+		grid: &nodes.Sprite3D{
 			Position: rl.Vector3Zero(),
 			Rotation: rl.Vector3{
-				X: 0,
+				X: 90,
 				Y: 0,
 				Z: 0,
 			},
