@@ -47,8 +47,9 @@ func (debug *DebugScene) Draw() {
 	}
 
 	util.DrawTextMFont(fmt.Sprint("Current: ", util.SelectedMapSet.Title, "[", util.SelectedMap.Name, "]"), 8, 26*1, 26, rl.Green)
-	util.DrawTextMFont(fmt.Sprintf("Rendering: %d", debug.game.note_manager.NotesProcessing), 8, 26*2, 26, rl.Green)
-	util.DrawTextMFont(fmt.Sprintf("Time: %.02f", debug.game.sync_manger.RealTime), 8, 26*3, 26, rl.Green)
+	util.DrawTextMFont(fmt.Sprintf("Rendering: %d", len(debug.game.note_renderer.ToRender)), 8, 26*2, 26, rl.Green)
+	util.DrawTextMFont(fmt.Sprintf("Note: %d/%d", debug.game.note_manager.StartProcess, len(debug.game.note_manager.OrderedNotes)), 8, 26*3, 26, rl.Green)
+	util.DrawTextMFont(fmt.Sprintf("Time: %.02f", debug.game.sync_manger.RealTime), 8, 26*4, 26, rl.Green)
 }
 
 func (scene DebugScene) GetType() int {

@@ -2,7 +2,6 @@ package nodes
 
 import (
 	"errors"
-	"fmt"
 	"os"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -32,11 +31,7 @@ func (sprite *Sprite3D) GenPlane(width float32, height float32, tex_path string)
 	}
 
 	img := rl.LoadImage(tex_path)
-	log.Info().Msg("Generating image...")
 
-	fmt.Println(img)
-
-	log.Info().Msg("Generating texture...")
 	tex := rl.LoadTextureFromImage(img)
 	rl.UnloadImage(img)
 	log.Info().Msg("Loaded texture")

@@ -15,8 +15,9 @@ type GameScene struct {
 	camera nodes.Camera
 	grid   nodes.Sprite3D
 
-	sync_manger  *managers.SyncManager
-	note_manager *managers.NoteManager
+	sync_manger   *managers.SyncManager
+	note_renderer *managers.NoteRenderer
+	note_manager  *managers.NoteManager
 }
 
 func CreateGameScene() *GameScene {
@@ -25,7 +26,7 @@ func CreateGameScene() *GameScene {
 
 		camera: nodes.NewCamera(rl.Vector3{
 			X: 0,
-			Y: 0,
+			Y: 0.0,
 			Z: 7.5 * util.VFCONV32,
 		}),
 		grid: nodes.Sprite3D{
@@ -37,9 +38,11 @@ func CreateGameScene() *GameScene {
 			},
 			Size: rl.Vector2One(),
 		},
-		sync_manger:  managers.CreateSyncManager(),
-		note_manager: managers.CreateNoteManager(),
 	}
+
+	game.sync_manger = managers.CreateSyncManager()
+	game.note_renderer = managers.CreateNoteRenderer(game.sync_manger)
+	game.note_manager = managers.CreateNoteManager(game.sync_manger, game.note_renderer)
 
 	game.grid.GenPlane(1, 1, "data/.game/game/grid.png")
 
@@ -53,6 +56,7 @@ func CreateGameScene() *GameScene {
 
 func (game GameScene) Update(dt float64) {
 	game.sync_manger.Update(dt)
+	game.note_manager.Update(dt)
 }
 
 func (game *GameScene) Draw() {
@@ -60,6 +64,7 @@ func (game *GameScene) Draw() {
 
 	rl.BeginMode3D(game.camera.RlCamera)
 
+	game.note_renderer.DrawNotesSingle()
 	game.grid.Draw()
 
 	rl.EndMode3D()

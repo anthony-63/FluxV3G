@@ -16,11 +16,11 @@ type Note struct {
 	T float64
 
 	Hit   bool
-	Index uint
+	Index int
 	Color rl.Color
 }
 
-func MakeNote(x float64, y float64, time float64, index uint, color rl.Color) *Note {
+func MakeNote(x float64, y float64, time float64, index int, color rl.Color) *Note {
 	note := Note{
 		X:     x,
 		Y:     y,
