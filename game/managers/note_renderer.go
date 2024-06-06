@@ -51,7 +51,6 @@ func (renderer *NoteRenderer) DrawNotesSingle() {
 	sync := renderer.sync_manager
 
 	transforms := make([]rl.Matrix, len(renderer.ToRender))
-
 	for i, note := range renderer.ToRender {
 		note_time := note.CalculateTime(sync.RealTime, renderer.approach_time*sync.Speed)
 		note_distance := note_time * settings.GSettings.Note.ApproachDistance
@@ -62,17 +61,10 @@ func (renderer *NoteRenderer) DrawNotesSingle() {
 			-float32(note_distance),
 		)
 
-		// transforms[i] = rl.MatrixMultiply(transforms[i], rl.MatrixScale(1/util.VFCONV32, 1/util.VFCONV32, 1/util.VFCONV32))
 		transforms[i] = rl.MatrixMultiply(transforms[i], rl.MatrixScale(util.VFCONV32/1, util.VFCONV32/1, util.VFCONV32/1))
 
-		// 	rl.DrawModelEx(renderer.note_mesh, rl.Vector3{
-		// 		X: float32((note.X * 2) * util.VFCONV64),
-		// 		Y: float32((note.Y * 2) * util.VFCONV64),
-		// 		Z: -float32(note_distance),
-		// 	}, rl.Vector3Zero(), 0, rl.Vector3Divide(rl.NewVector3(util.VFCONV32, util.VFCONV32, util.VFCONV32), rl.Vector3One()), rl.White)
 		colored_mat := renderer.note_mat
 		colored_mat.Maps.Color = note.Color
-
 		rl.DrawMesh(renderer.note_mesh, colored_mat, transforms[i])
 	}
 }
