@@ -50,6 +50,7 @@ func CreateNoteManager(sync_manager *SyncManager, renderer *NoteRenderer) *NoteM
 
 		colors: []rl.Color{
 			rl.White,
+			rl.Pink,
 		},
 	}
 

@@ -1,12 +1,10 @@
 package settings
 
-import "flux/game/util"
-
 var GSettings Settings = Settings{
 	Note: NoteSettings{
-		ApproachRate:     36.8 * util.VFCONV64,
-		ApproachDistance: 14 * util.VFCONV64,
-		ApproachTime:     (14 * util.VFCONV64) / (36.8 * util.VFCONV64),
+		ApproachRate:     36.8,
+		ApproachDistance: 14,
+		ApproachTime:     14 / 36.8,
 		Pushback:         false,
 	},
 }

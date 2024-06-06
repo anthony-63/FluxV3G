@@ -14,7 +14,8 @@ import (
 const NOTE_MESH_PATH = "data/.game/game/mesh.gltf"
 
 type NoteRenderer struct {
-	note_mesh rl.Model
+	note_mesh rl.Mesh
+	note_mat  rl.Material
 
 	approach_time float64
 
@@ -27,6 +28,7 @@ func CreateNoteRenderer(sync *SyncManager) *NoteRenderer {
 	renderer := NoteRenderer{
 		sync_manager:  sync,
 		ToRender:      []nodes.Note{},
+		note_mat:      rl.LoadMaterialDefault(),
 		approach_time: settings.GSettings.Note.ApproachTime,
 	}
 
@@ -36,7 +38,9 @@ func CreateNoteRenderer(sync *SyncManager) *NoteRenderer {
 	}
 
 	log.Info().Msg("Loading note mesh...")
-	renderer.note_mesh = rl.LoadModel(NOTE_MESH_PATH)
+	model := rl.LoadModel(NOTE_MESH_PATH)
+	renderer.note_mesh = model.GetMeshes()[0]
+	renderer.note_mat.Maps.Color = rl.White
 
 	log.Info().Msg("Done")
 
@@ -46,14 +50,29 @@ func CreateNoteRenderer(sync *SyncManager) *NoteRenderer {
 func (renderer *NoteRenderer) DrawNotesSingle() {
 	sync := renderer.sync_manager
 
-	for _, note := range renderer.ToRender {
+	transforms := make([]rl.Matrix, len(renderer.ToRender))
+
+	for i, note := range renderer.ToRender {
 		note_time := note.CalculateTime(sync.RealTime, renderer.approach_time*sync.Speed)
 		note_distance := note_time * settings.GSettings.Note.ApproachDistance
 
-		rl.DrawModelEx(renderer.note_mesh, rl.Vector3{
-			X: float32((note.X * 2) * util.VFCONV64),
-			Y: float32((note.Y * 2) * util.VFCONV64),
-			Z: -float32(note_distance),
-		}, rl.Vector3Zero(), 0, rl.Vector3Divide(rl.NewVector3(util.VFCONV32, util.VFCONV32, util.VFCONV32), rl.Vector3One()), rl.White)
+		transforms[i] = rl.MatrixTranslate(
+			float32((note.X * 2)),
+			float32((note.Y * 2)),
+			-float32(note_distance),
+		)
+
+		// transforms[i] = rl.MatrixMultiply(transforms[i], rl.MatrixScale(1/util.VFCONV32, 1/util.VFCONV32, 1/util.VFCONV32))
+		transforms[i] = rl.MatrixMultiply(transforms[i], rl.MatrixScale(util.VFCONV32/1, util.VFCONV32/1, util.VFCONV32/1))
+
+		// 	rl.DrawModelEx(renderer.note_mesh, rl.Vector3{
+		// 		X: float32((note.X * 2) * util.VFCONV64),
+		// 		Y: float32((note.Y * 2) * util.VFCONV64),
+		// 		Z: -float32(note_distance),
+		// 	}, rl.Vector3Zero(), 0, rl.Vector3Divide(rl.NewVector3(util.VFCONV32, util.VFCONV32, util.VFCONV32), rl.Vector3One()), rl.White)
+		colored_mat := renderer.note_mat
+		colored_mat.Maps.Color = note.Color
+
+		rl.DrawMesh(renderer.note_mesh, colored_mat, transforms[i])
 	}
 }

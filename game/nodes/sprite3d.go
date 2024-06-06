@@ -38,6 +38,7 @@ func (sprite *Sprite3D) GenPlane(width float32, height float32, tex_path string)
 
 	log.Info().Msg("Setting texture...")
 	rl.SetMaterialTexture(sprite.model.Materials, rl.MapDiffuse, tex)
+
 	log.Info().Msg("Done")
 }
 
