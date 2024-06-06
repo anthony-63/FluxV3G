@@ -4,6 +4,8 @@ import (
 	"flux/game/nodes"
 	"flux/game/settings"
 	"flux/game/util"
+	"strconv"
+	"time"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"github.com/rs/zerolog/log"
@@ -127,6 +129,10 @@ func (manager *NoteManager) updateNotes() {
 }
 
 func (manager *NoteManager) Load() {
+	log.Info().Msg("Loading notes")
+
+	timestamp := time.Now().UnixMilli()
+
 	for i, ndata := range util.SelectedMap.Notes {
 		if ndata.T < util.StartFrom {
 			manager.skipped_notes += 1
@@ -140,5 +146,5 @@ func (manager *NoteManager) Load() {
 		manager.next_note = &manager.OrderedNotes[0]
 	}
 
-	log.Info().Int("notes built", len(manager.OrderedNotes)).Msg("NoteManager")
+	log.Info().Msg("Built notes in " + strconv.Itoa(len(manager.OrderedNotes)) + " in " + strconv.Itoa(int(time.Now().UnixMilli()-timestamp)) + "ms")
 }

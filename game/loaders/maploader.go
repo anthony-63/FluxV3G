@@ -58,5 +58,5 @@ func LoadMaps(progress_chan chan util.ProgressStruct) {
 		Done: true,
 	}
 
-	log.Debug().Msg("Loaded " + strconv.Itoa(len(map_files)) + " maps in " + strconv.Itoa(int(time.Now().UnixMilli()-timestamp)) + "ms")
+	log.Info().Msg("Loaded " + strconv.Itoa(len(map_files)) + " maps in " + strconv.Itoa(int(time.Now().UnixMilli()-timestamp)) + "ms")
 }
