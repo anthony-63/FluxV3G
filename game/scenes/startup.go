@@ -104,7 +104,7 @@ func (scene *StartupScene) Update(dt float64) {
 		util.SelectedMapSet = loaders.LoadedMaps[0]
 		util.SelectedMap = util.SelectedMapSet.Difficulties[0]
 
-		SceneList = []IScene{CreateMenuScene(), CreateDebugScene()}
+		SceneList = []IScene{CreateGameScene(), CreateDebugScene()}
 	}
 }
 

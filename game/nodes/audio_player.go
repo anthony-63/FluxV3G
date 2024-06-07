@@ -59,7 +59,7 @@ func (player *AudioPlayer) Update() {
 }
 
 func (player *AudioPlayer) ShouldSync(current_time float64) bool {
-	return rl.GetMusicTimePlayed(player.music)-float32(current_time) > 0.2
+	return float32(current_time)-rl.GetMusicTimePlayed(player.music) > 0.2
 }
 
 func (player *AudioPlayer) Sync(current_time float64) {
