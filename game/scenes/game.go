@@ -44,10 +44,12 @@ func CreateGameScene() *GameScene {
 	game.note_renderer = managers.CreateNoteRenderer(game.sync_manger)
 	game.note_manager = managers.CreateNoteManager(game.sync_manger, game.note_renderer)
 
-	audio_player := util.AudioPlayerFromFile(util.SelectedMapSet.Path + "/" + util.SelectedMapSet.MusicPath)
-	rl.PlayMusicStream(audio_player)
-	rl.SetMusicVolume(audio_player, 0.1)
-	game.sync_manger.AudioStream = audio_player
+	audio_player := nodes.AudioPlayerFromFile(util.SelectedMapSet.Path + "/" + util.SelectedMapSet.MusicPath)
+
+	audio_player.SetVolume(0.1)
+	audio_player.Play(0)
+
+	game.sync_manger.AudioPlayer = audio_player
 
 	game.grid.GenPlane(1, 1, "data/.game/game/grid.png")
 
