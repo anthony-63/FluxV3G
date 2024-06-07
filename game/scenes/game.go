@@ -14,6 +14,7 @@ type GameScene struct {
 
 	camera nodes.Camera
 	grid   *nodes.Sprite3D
+	cursor *nodes.Cursor
 
 	sync_manger   *managers.SyncManager
 	note_renderer *managers.NoteRenderer
@@ -38,6 +39,7 @@ func CreateGameScene() *GameScene {
 			},
 			Size: rl.Vector2One(),
 		},
+		cursor: nodes.CreateCursor(),
 	}
 
 	game.sync_manger = managers.CreateSyncManager()
@@ -73,6 +75,7 @@ func (game *GameScene) Draw() {
 
 	game.note_renderer.DrawNotesSingle()
 	game.grid.Draw()
+	game.cursor.Draw()
 
 	rl.EndMode3D()
 }
