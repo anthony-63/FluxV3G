@@ -48,9 +48,6 @@ func CreateGameScene() *GameScene {
 
 	audio_player := nodes.AudioPlayerFromFile(util.SelectedMapSet.Path + "/" + util.SelectedMapSet.MusicPath)
 
-	audio_player.SetVolume(0.1)
-	audio_player.Play(0)
-
 	game.sync_manger.AudioPlayer = audio_player
 
 	game.grid.GenPlane(1, 1, "data/.game/game/grid.png")
@@ -60,11 +57,17 @@ func CreateGameScene() *GameScene {
 
 	game.sync_manger.Start(0)
 
+	audio_player.SetVolume(0.1)
+	audio_player.Play(0)
+
+	rl.DisableCursor()
+
 	return &game
 }
 
 func (game GameScene) Update(dt float64) {
 	go game.sync_manger.Update(dt)
+	game.cursor.Update(dt, game.grid)
 	game.note_manager.Update(dt)
 }
 

@@ -7,6 +7,10 @@ var GSettings Settings = Settings{
 		ApproachTime:     14 / 36.8,
 		Pushback:         false,
 	},
+	Cursor: CursorSettings{
+		Scale:       1,
+		Sensitivity: 0.005,
+	},
 }
 
 type NoteSettings struct {
@@ -16,6 +20,12 @@ type NoteSettings struct {
 	Pushback         bool
 }
 
+type CursorSettings struct {
+	Scale       float64
+	Sensitivity float64
+}
+
 type Settings struct {
-	Note NoteSettings
+	Note   NoteSettings
+	Cursor CursorSettings
 }
