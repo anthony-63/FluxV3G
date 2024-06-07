@@ -18,9 +18,9 @@ type Sprite3D struct {
 	loaded bool
 }
 
-func (sprite *Sprite3D) GenPlane(width float32, height float32, tex_path string) {
+func (sprite *Sprite3D) GenPlane(tex_path string) {
 	log.Info().Msg("Generating sprite model(plane)")
-	sprite.model = rl.LoadModelFromMesh(rl.GenMeshPlane(width, height, 1, 1))
+	sprite.model = rl.LoadModelFromMesh(rl.GenMeshPlane(sprite.Size.X, sprite.Size.Y, 1, 1))
 	log.Info().Msg("Generated model")
 
 	log.Info().Msg("Loading texture...")

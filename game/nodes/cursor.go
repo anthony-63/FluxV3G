@@ -2,12 +2,11 @@ package nodes
 
 import (
 	"flux/game/settings"
-	"flux/game/util"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-const CLAMP = ((6. - 0.525) / 2) * util.VFCONV32
+const CLAMP = ((6. - 0.525) / 2)
 
 type Cursor struct {
 	sprite *Sprite3D
@@ -27,12 +26,15 @@ func CreateCursor() *Cursor {
 				Y: 0,
 				Z: 0,
 			},
-			Size: rl.Vector2One(),
+			Size: rl.Vector2{
+				X: 0.5,
+				Y: 0.5,
+			},
 		},
 		last_mouse: rl.GetMousePosition(),
 	}
 
-	cursor.sprite.GenPlane(0.1, 0.1, "data/.game/game/cursor.png")
+	cursor.sprite.GenPlane("data/.game/game/cursor.png")
 
 	return &cursor
 }
@@ -46,7 +48,7 @@ func (cursor *Cursor) Update(dt float64, grid *Sprite3D) {
 	mouse_delta := rl.Vector2Subtract(new_pos, cursor.last_mouse)
 	cursor.last_mouse = new_pos
 
-	delta := rl.Vector2{X: mouse_delta.X * float32(settings.GSettings.Cursor.Sensitivity/1000), Y: mouse_delta.Y * float32(settings.GSettings.Cursor.Sensitivity/1000)}
+	delta := rl.Vector2{X: mouse_delta.X * float32(settings.GSettings.Cursor.Sensitivity/100), Y: mouse_delta.Y * float32(settings.GSettings.Cursor.Sensitivity/100)}
 
 	cursor.RealPosition.X += delta.X
 	cursor.RealPosition.Y += delta.Y

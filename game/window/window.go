@@ -13,8 +13,8 @@ import (
 
 var GameWindow FluxWindow
 
-const WIDTH = 1920
-const HEIGHT = 1080
+const WIDTH = 1280
+const HEIGHT = 720
 const TITLE = "FluxV3-OPT"
 const ICON_PATH = "data/.game/images/flux.png"
 
@@ -25,7 +25,7 @@ func CreateWindow() FluxWindow {
 	rl.SetTraceLogLevel(rl.LogWarning)
 	rl.InitWindow(WIDTH, HEIGHT, TITLE)
 
-	rl.ToggleFullscreen()
+	rl.ToggleBorderlessWindowed()
 
 	log.Info().Msg("Loading window icon...")
 	if _, err := os.Stat(ICON_PATH); errors.Is(err, os.ErrNotExist) {
@@ -61,6 +61,7 @@ func (window *FluxWindow) RunWindow() {
 		rl.BeginDrawing()
 
 		for _, scene := range scenes.SceneList {
+			rl.PollInputEvents()
 			scene.Update(float64(rl.GetFrameTime()))
 			scene.Draw()
 		}

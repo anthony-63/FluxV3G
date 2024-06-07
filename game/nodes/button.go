@@ -15,6 +15,7 @@ type Button struct {
 	Color          rl.Color
 	HighlightColor rl.Color
 	FocusColor     rl.Color
+	PressedColor   rl.Color
 
 	BorderColor rl.Color
 	BorderWidth float32
@@ -33,6 +34,7 @@ type Button struct {
 	current_color rl.Color
 
 	focused bool
+	pressed bool
 }
 
 func (button *Button) ProcessInputs() {

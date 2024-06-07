@@ -1,7 +1,6 @@
 package nodes
 
 import (
-	"flux/game/util"
 	"math"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -52,5 +51,5 @@ func (note Note) CalculateTime(current_time float64, approach_time float64) floa
 }
 
 func (note Note) IsBeingHit(cursor_pos rl.Vector2) bool {
-	return math.Abs((float64(cursor_pos.X)-note.X*2)*util.VFCONV64) <= AABB && math.Abs((float64(cursor_pos.Y)-note.Y*2)*util.VFCONV64) <= AABB
+	return math.Abs((float64(cursor_pos.X)-note.X*2)) <= AABB && math.Abs((float64(cursor_pos.Y)-note.Y*2)) <= AABB
 }

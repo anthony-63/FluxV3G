@@ -4,7 +4,6 @@ import (
 	"errors"
 	"flux/game/nodes"
 	"flux/game/settings"
-	"flux/game/util"
 	"os"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -61,7 +60,7 @@ func (renderer *NoteRenderer) DrawNotesSingle() {
 			-float32(note_distance),
 		)
 
-		transforms[i] = rl.MatrixMultiply(transforms[i], rl.MatrixScale(util.VFCONV32/1, util.VFCONV32/1, util.VFCONV32/1))
+		transforms[i] = rl.MatrixMultiply(transforms[i], rl.MatrixScale(1, 1, 1))
 
 		colored_mat := renderer.note_mat
 		colored_mat.Maps.Color = note.Color

@@ -24,7 +24,7 @@ func CreateGameScene() *GameScene {
 		camera: nodes.NewCamera(rl.Vector3{
 			X: 0,
 			Y: 0,
-			Z: 7.5 * util.VFCONV32,
+			Z: 7.5,
 		}),
 		grid: &nodes.Sprite3D{
 			Position: rl.Vector3Zero(),
@@ -33,7 +33,10 @@ func CreateGameScene() *GameScene {
 				Y: 0,
 				Z: 0,
 			},
-			Size: rl.Vector2One(),
+			Size: rl.Vector2{
+				X: 6,
+				Y: 6,
+			},
 		},
 		cursor: nodes.CreateCursor(),
 	}
@@ -46,7 +49,7 @@ func CreateGameScene() *GameScene {
 
 	game.sync_manger.AudioPlayer = audio_player
 
-	game.grid.GenPlane(1, 1, "data/.game/game/grid.png")
+	game.grid.GenPlane("data/.game/game/grid.png")
 
 	log.Info().Str("current_map", util.SelectedMapSet.Title).Msg("Game")
 	log.Info().Str("current_difficulty", util.SelectedMap.Name).Msg("Game")
