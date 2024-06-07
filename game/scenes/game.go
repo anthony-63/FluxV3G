@@ -67,7 +67,7 @@ func CreateGameScene() *GameScene {
 
 func (game GameScene) Update(dt float64) {
 	go game.sync_manger.Update(dt)
-	game.cursor.Update(dt, game.grid)
+	go game.cursor.Update(dt, game.grid)
 	game.note_manager.Update(dt)
 }
 

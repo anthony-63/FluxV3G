@@ -14,6 +14,8 @@ type Cursor struct {
 
 	ClampedPosition rl.Vector2
 	RealPosition    rl.Vector2
+
+	last_mouse rl.Vector2
 }
 
 func CreateCursor() *Cursor {
@@ -27,6 +29,7 @@ func CreateCursor() *Cursor {
 			},
 			Size: rl.Vector2One(),
 		},
+		last_mouse: rl.GetMousePosition(),
 	}
 
 	cursor.sprite.GenPlane(0.1, 0.1, "data/.game/game/cursor.png")
@@ -39,8 +42,11 @@ func (cursor *Cursor) Draw() {
 }
 
 func (cursor *Cursor) Update(dt float64, grid *Sprite3D) {
-	delta := rl.GetMouseDelta()
-	delta = rl.Vector2{X: delta.X * float32(settings.GSettings.Cursor.Sensitivity), Y: delta.Y * float32(settings.GSettings.Cursor.Sensitivity)}
+	new_pos := rl.GetMousePosition()
+	mouse_delta := rl.Vector2Subtract(new_pos, cursor.last_mouse)
+	cursor.last_mouse = new_pos
+
+	delta := rl.Vector2{X: mouse_delta.X * float32(settings.GSettings.Cursor.Sensitivity/1000), Y: mouse_delta.Y * float32(settings.GSettings.Cursor.Sensitivity/1000)}
 
 	cursor.RealPosition.X += delta.X
 	cursor.RealPosition.Y += delta.Y

@@ -9,7 +9,7 @@ var GSettings Settings = Settings{
 	},
 	Cursor: CursorSettings{
 		Scale:       1,
-		Sensitivity: 0.005,
+		Sensitivity: 1,
 	},
 }
 
