@@ -11,8 +11,6 @@ import (
 )
 
 type StartupScene struct {
-	scene_type int
-
 	dot_timer float64
 
 	progress        nodes.ProgressBar
@@ -29,8 +27,6 @@ func CreateStartupScene() *StartupScene {
 	go loaders.LoadMaps(progress_chan)
 
 	scene := StartupScene{
-		scene_type: SCENE_TYPE_STARTUP,
-
 		progress: nodes.ProgressBar{
 			X: float32(rl.GetScreenWidth()) / 2,
 			Y: float32(rl.GetScreenHeight())/2 + 45,
@@ -108,7 +104,7 @@ func (scene *StartupScene) Update(dt float64) {
 		util.SelectedMapSet = loaders.LoadedMaps[0]
 		util.SelectedMap = util.SelectedMapSet.Difficulties[0]
 
-		SceneList = []IScene{CreateGameScene(), CreateDebugScene()}
+		SceneList = []IScene{CreateMenuScene(), CreateDebugScene()}
 	}
 }
 
@@ -122,5 +118,5 @@ func (scene StartupScene) Draw() {
 }
 
 func (scene StartupScene) GetType() int {
-	return scene.scene_type
+	return SCENE_TYPE_STARTUP
 }

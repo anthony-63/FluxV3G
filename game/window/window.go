@@ -25,7 +25,7 @@ func CreateWindow() FluxWindow {
 	rl.SetTraceLogLevel(rl.LogWarning)
 	rl.InitWindow(WIDTH, HEIGHT, TITLE)
 
-	rl.ToggleBorderlessWindowed()
+	// rl.ToggleBorderlessWindowed()
 
 	log.Info().Msg("Loading window icon...")
 	if _, err := os.Stat(ICON_PATH); errors.Is(err, os.ErrNotExist) {

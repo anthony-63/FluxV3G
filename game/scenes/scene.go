@@ -3,6 +3,7 @@ package scenes
 const (
 	SCENE_TYPE_STARTUP = iota
 	SCENE_TYPE_DEBUG
+	SCENE_TYPE_MENU
 	SCENE_TYPE_GAME
 )
 
