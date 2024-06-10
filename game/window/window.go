@@ -24,7 +24,7 @@ func CreateWindow() FluxWindow {
 	rl.SetConfigFlags(rl.FlagMsaa4xHint)
 	rl.SetTraceLogLevel(rl.LogWarning)
 	rl.InitWindow(WIDTH, HEIGHT, TITLE)
-
+	// rl.SetTargetFPS(360)
 	rl.ToggleBorderlessWindowed()
 
 	log.Info().Msg("Loading window icon...")
